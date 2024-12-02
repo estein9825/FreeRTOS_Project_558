@@ -1,0 +1,8 @@
+*.csv
+CMSIS_5/*
+*.vscode/c_cpp_properties.json
+**.settings
+build/gcc/output/*.d
+build/gcc/output/*.o
+build/gcc/output/*.map
+build/gcc/output/*.out

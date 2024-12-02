@@ -1,0 +1,55 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Build QEMU Demo",
+        "type": "shell",
+        "command": "make --directory=${input:escapedWorkspaceFolder}/build/gcc",
+        "problemMatcher": {
+          "base": "$gcc",
+          "fileLocation": ["relative", "${input:escapedWorkspaceFolder}/build/gcc"]
+        },
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        }
+      },
+      {
+        "label": "Run QEMU Demo",
+        "type": "shell",
+        "command": "echo 'QEMU RTOSdemo started'; qemu-system-arm -machine mps2-an385 -cpu cortex-m3 -kernel ${input:escapedWorkspaceFolder}/build/gcc/output/RTOSDemo.out -monitor none -nographic -serial stdio -gdb tcp::1234 -S",
+        "dependsOn": ["Build QEMU Demo"],
+        "isBackground": true,
+        "problemMatcher": [
+          {
+            "pattern": [
+              {
+                "regexp": "(.*)",
+                "file": 1,
+                "location": 2,
+                "message": 3
+              }
+            ],
+            "background": {
+              "activeOnStart": true,
+              "beginsPattern": "QEMU RTOSdemo started",  // Look for the QEMU start message
+              "endsPattern": "QEMU RTOSdemo started"  // Pattern to indicate QEMU is still running (can be adjusted)
+            }
+          }
+        ]
+      }
+    ],
+    "inputs": [
+      {
+        "id": "escapedWorkspaceFolder",
+        "type": "command",
+        "command": "shellCommand.execute",
+        "args": {
+          "command": "echo \"${workspaceFolder}\" | sed 's/ /\\\\ /g'",
+          "fieldSepector": "|",
+          "description": "Escaped workspace folder"
+        }
+      }
+    ]
+  }
+  

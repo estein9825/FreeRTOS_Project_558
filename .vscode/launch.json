@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "GDB Debug QEMU",
+      "type": "gdb",
+      "request": "attach",
+      "executable": "${workspaceFolder}/build/gcc/output/RTOSDemo.out",  // Path to your compiled program
+      "target": ":1234",
+      "cwd": "${workspaceRoot}",
+      "remote": true,
+      "stopAtEntry": true,
+      "stopAtConnect": true,
+      "preLaunchTask": "Run QEMU Demo",
+      "gdbpath": "arm-none-eabi-gdb",
+    }
+  ]
+}
